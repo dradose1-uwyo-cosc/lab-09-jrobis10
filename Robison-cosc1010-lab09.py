@@ -49,7 +49,7 @@ class Pizza:
 
     def setsize(self, size): 
 
-        if not size.isdigit() or int(size)<10
+        if str(size).isdigit() and int(size) >= 10: 
             
             self.size = 10
         
@@ -121,18 +121,76 @@ class Pizza:
 
 class Pizzeria: 
 
-    def __init__(self, orders = 0, price_per_topping - 0.3, price_per_inch = 0.6,pizzas)
+    price_per_topping = 0.3
 
-    def placeOrder(self, ): 
+    price_per_inch = 0.6
 
-    def getPrice(self, ): 
+    def __init__(self):
 
-    def getReceipt(self, ): 
+        self.orders = 0
 
-    def getNumberOfOrders(self, ): 
+        self.pizzas = []
+
+    def placeorder(self):
+
+        size = int(input('enter desired pizza size: '))
+
+        sauce = input('enter desired type of sauce, default is red: ')
+
+        if sauce == "":
+
+            sauce = "red"
+
+        toppings = []
+
+        while True: 
+
+            topping = input('desired toppings, hit enter to finish: ')
+
+            if topping == '':
+
+                break 
+
+            toppings.append(topping)
+
+        new_pizza = Pizza(size,sauce)
+
+        new_pizza.setToppings(toppings)
+
+        self.orders += 1
+
+        return new_pizza 
+
+    def getprice(self,pizza):
+
+        return ((pizza.getsize() * price_per_inch + pizza.getAmountOfToppings() * price_per_topping))
 
 
+    def getreceipt(self,pizza): 
 
+        size_price = pizza.getsize() * self.price_per_inch
+
+        toppings_price = pizza.getToppingCount() * self.price_per_topping
+
+        total = size_price + toppings_price
+
+        print("Receipt:")
+
+        print(f"sauce: {pizza.getsauce()}")
+
+        print(f"size: {pizza.getsize()} inches")
+
+        print(f"toppings: {', '.join(pizza.getToppings())}")
+
+        print(f"price for size: ${toppings_price:.2f}")
+
+        print(f"price for toppings: ${toppings_price:.2f}")
+
+        print(f"total price: ${total:.2f}")
+
+    def getNumberOfOrders(self):
+
+        return self.orders
 
 
 # - Declare your pizzeria object.
@@ -142,6 +200,22 @@ class Pizzeria:
 # - After the order is placed, call the getReceipt() method.
 # - Repeat the loop as needed.
 # - AFTER the loop, print how many orders were placed.
+
+pizzeria = Pizzeria()
+
+while True:
+
+    order = input('would you like to order a pizza, enter exit to quit: ')
+
+    if order.lower() == 'exit':
+
+        break 
+
+    pizza = pizzeria.placeorder()
+
+    pizzeria.getreceipt(pizza)
+
+print(f'total number of orders placed: {pizzeria.getNumberOfOrders()}')
 
 
 # Example output:
